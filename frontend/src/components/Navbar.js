@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Login from "./Login";
+import { useAuth } from "../context/AuthProvider";
+import Goout from "./Goout";
 
 function Navbar() {
+  const [authUser] = useAuth();
+  console.log(authUser);
+
   let location = useLocation();
   const [sticky, setSticky] = useState(false);
   useEffect(() => {
@@ -60,10 +65,14 @@ function Navbar() {
                   location.pathname === "/course" ? "active" : ""
                 }  `}
               >
-                <Link className="nav-link" to="/course">
+                <Link
+                  className="nav-link"
+                  to={authUser ? `/course` : `/signup`}
+                >
                   Course
                 </Link>
               </li>
+
               <li
                 className={`nav-item ${
                   location.pathname === "/contact" ? "active" : ""
@@ -83,25 +92,19 @@ function Navbar() {
                 </a>
               </li>
             </ul>
-            <form className="d-flex" role="search">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button className="btn btn-outline-success" type="submit">
-                Search
+
+            {authUser ? (
+              <Goout />
+            ) : (
+              <button
+                type="button"
+                className="btn btn-primary m-2"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
+                Login
               </button>
-            </form>
-            <button
-              type="button"
-              className="btn btn-primary m-2"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-            >
-              Login
-            </button>
+            )}
           </div>
         </div>
       </nav>

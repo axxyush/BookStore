@@ -1,9 +1,22 @@
-import React from "react";
-import list from "./list.json";
+import React, { useState, useEffect } from "react";
 import Cards from "./Cards";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function Course() {
+  const [book, setBook] = useState([]);
+  useEffect(() => {
+    const getBook = async () => {
+      try {
+        const res = await axios.get("http://localhost:4001/book");
+        // console.log(res.data);
+        setBook(res.data);
+      } catch (error) {
+        console.log("Error : ", error);
+      }
+    };
+    getBook();
+  }, []);
   return (
     <>
       <div className="px-4 py-5 my-5 text-center">
@@ -33,7 +46,7 @@ function Course() {
       <div className="album py-5 bg-body-tertiary">
         <div className="container">
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {list.map((item) => (
+            {book.map((item) => (
               <Cards item={item} key={item.id} />
             ))}
           </div>

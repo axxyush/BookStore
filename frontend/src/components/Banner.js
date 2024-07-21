@@ -1,6 +1,9 @@
 import React from "react";
+import { useAuth } from "../context/AuthProvider";
 
 function Banner() {
+  const [authUser] = useAuth();
+  const userName = authUser ? authUser.fullname : "Stranger";
   return (
     <>
       <div className="container col-xxl-8 px-4 py-5">
@@ -17,7 +20,7 @@ function Banner() {
           </div>
           <div className="col-lg-6">
             <h1 className="display-5 fw-bold text-body-emphasis lh-1 mb-3">
-              Welcome to BookStore
+              Welcome {userName}!
             </h1>
             <p className="lead">
               <b className="text-danger">Learn something new everyday!</b> Lorem
