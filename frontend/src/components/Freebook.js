@@ -10,7 +10,7 @@ function Freebook() {
   useEffect(() => {
     const getBook = async () => {
       try {
-        const res = await axios.get("https://bookstore-ucwf.onrender.com/book");
+        const res = await axios.get("https://bookstore-ucwf.onrender.com");
         // console.log(res.data);
         setBook(res.data);
       } catch (error) {
